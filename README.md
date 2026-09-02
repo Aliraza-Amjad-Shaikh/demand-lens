@@ -1,4 +1,4 @@
-\# DemandLens — Retail Demand Forecasting + AI Business Advisor
+# DemandLens — Retail Demand Forecasting + AI Business Advisor
 
 
 
@@ -10,7 +10,7 @@ This is being built fully in public, stage by stage, with every decision documen
 
 
 
-\## Why This Project Exists
+## Why This Project Exists
 
 
 
@@ -18,27 +18,27 @@ Most forecasting projects stop at a notebook with an R² score and a shrug. Dema
 
 
 
-\- A clean, documented data pipeline that treats data quality as engineering, not a formality
+- A clean, documented data pipeline that treats data quality as engineering, not a formality
 
-\- Models that are evaluated not just on accuracy, but on where they break and why
+- Models that are evaluated not just on accuracy, but on where they break and why
 
-\- An AI layer that narrates forecasts without hallucinating — grounded in actual numbers, not vague storytelling
+- An AI layer that narrates forecasts without hallucinating — grounded in actual numbers, not vague storytelling
 
-\- A dashboard that a stranger can open and understand without you explaining it
+- A dashboard that a stranger can open and understand without you explaining it
 
 
 
-\## Dataset
+## Dataset
 
 
 
 Rossmann Store Sales (Kaggle competition):
 
-\- `train.csv`: 1,017,209 daily sales records across 1,115 stores (2013-01-01 to 2015-07-31)
+- `train.csv`: 1,017,209 daily sales records across 1,115 stores (2013-01-01 to 2015-07-31)
 
-\- `test.csv`: 41,088 rows for the held-out forecast window
+- `test.csv`: 41,088 rows for the held-out forecast window
 
-\- `store.csv`: Store-level metadata (StoreType, Assortment, CompetitionDistance, Promo2 participation, etc.)
+- `store.csv`: Store-level metadata (StoreType, Assortment, CompetitionDistance, Promo2 participation, etc.)
 
 
 
@@ -46,7 +46,7 @@ Competition page: https://www.kaggle.com/c/rossmann-store-sales
 
 
 
-\## Project Structure
+## Project Structure
 
 
 
@@ -80,7 +80,7 @@ Raw and processed CSVs are gitignored — the pipeline is reproducible from the 
 
 
 
-\## Stage Roadmap
+## Stage Roadmap
 
 
 
@@ -88,17 +88,17 @@ This project is being built in 7 deliberate stages. Each stage has a clear "done
 
 
 
-\### Stage 1 — Data Collection \& Cleaning ✅ \*\*COMPLETE\*\*
+### Stage 1 — Data Collection \& Cleaning ✅ \*\*COMPLETE\*\*
 
 
 
-\*\*Goal:\*\* Turn raw, messy retail data into something trustworthy.
+*\*Goal:\*\* Turn raw, messy retail data into something trustworthy.
 
 
 
-\*\*What was done:\*\*
+*\*What was done:\*\*
 
-\- Merged `train.csv` + `store.csv` on `Store` (left join), validated row counts and relational integrity
+- Merged `train.csv` + `store.csv` on `Store` (left join), validated row counts and relational integrity
 
 \- Fixed `StateHoliday` mixed-type issue (integer `0` + string `'0'` unified to string)
 
