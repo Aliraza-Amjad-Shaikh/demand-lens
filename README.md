@@ -1,4 +1,4 @@
-\# DemandLens — Retail Demand Forecasting + AI Business Advisor
+# DemandLens — Retail Demand Forecasting + AI Business Advisor
 
 
 
@@ -10,7 +10,7 @@ This is being built fully in public, stage by stage, with every decision documen
 
 
 
-\## Why This Project Exists
+## Why This Project Exists
 
 
 
@@ -18,27 +18,27 @@ Most forecasting projects stop at a notebook with an R² score and a shrug. Dema
 
 
 
-\- A clean, documented data pipeline that treats data quality as engineering, not a formality
+- A clean, documented data pipeline that treats data quality as engineering, not a formality
 
-\- Models that are evaluated not just on accuracy, but on where they break and why
+- Models that are evaluated not just on accuracy, but on where they break and why
 
-\- An AI layer that narrates forecasts without hallucinating — grounded in actual numbers, not vague storytelling
+- An AI layer that narrates forecasts without hallucinating — grounded in actual numbers, not vague storytelling
 
-\- A dashboard that a stranger can open and understand without you explaining it
+- A dashboard that a stranger can open and understand without you explaining it
 
 
 
-\## Dataset
+## Dataset
 
 
 
 Rossmann Store Sales (Kaggle competition):
 
-\- `train.csv`: 1,017,209 daily sales records across 1,115 stores (2013-01-01 to 2015-07-31)
+- `train.csv`: 1,017,209 daily sales records across 1,115 stores (2013-01-01 to 2015-07-31)
 
-\- `test.csv`: 41,088 rows for the held-out forecast window
+- `test.csv`: 41,088 rows for the held-out forecast window
 
-\- `store.csv`: Store-level metadata (StoreType, Assortment, CompetitionDistance, Promo2 participation, etc.)
+- `store.csv`: Store-level metadata (StoreType, Assortment, CompetitionDistance, Promo2 participation, etc.)
 
 
 
@@ -46,7 +46,7 @@ Competition page: https://www.kaggle.com/c/rossmann-store-sales
 
 
 
-\## Project Structure
+## Project Structure
 
 
 
@@ -80,7 +80,7 @@ Raw and processed CSVs are gitignored — the pipeline is reproducible from the 
 
 
 
-\## Stage Roadmap
+## Stage Roadmap
 
 
 
@@ -88,227 +88,224 @@ This project is being built in 7 deliberate stages. Each stage has a clear "done
 
 
 
-\### Stage 1 — Data Collection \& Cleaning ✅ \*\*COMPLETE\*\*
+### Stage 1 — Data Collection \& Cleaning ✅ \*\*COMPLETE\*\*
 
 
 
-\*\*Goal:\*\* Turn raw, messy retail data into something trustworthy.
+*Goal:* Turn raw, messy retail data into something trustworthy.
 
 
 
-\*\*What was done:\*\*
+*What was done:*
 
-\- Merged `train.csv` + `store.csv` on `Store` (left join), validated row counts and relational integrity
+- Merged `train.csv` + `store.csv` on `Store` (left join), validated row counts and relational integrity
 
-\- Fixed `StateHoliday` mixed-type issue (integer `0` + string `'0'` unified to string)
+- Fixed `StateHoliday` mixed-type issue (integer `0` + string `'0'` unified to string)
 
-\- Imputed 11 missing `Open` values in `test.csv` (Store 622, Sept 2015) as `Open = 1`, documented as assumption
+- Imputed 11 missing `Open` values in `test.csv` (Store 622, Sept 2015) as `Open = 1`, documented as assumption
 
-\- Confirmed `Promo2Since\*`/`PromoInterval` nulls are structural (all where `Promo2 == 0`) — left as `NaN`
+- Confirmed `Promo2Since\*`/`PromoInterval` nulls are structural (all where `Promo2 == 0`) — left as `NaN`
 
-\- Left `CompetitionDistance` nulls (3 stores) untouched — deferred imputation strategy to Stage 3/4 modeling decision
+- Left `CompetitionDistance` nulls (3 stores) untouched — deferred imputation strategy to Stage 3/4 modeling decision
 
-\- Added `competition\_open\_date\_known` flag for stores with unknown competition opening date
+- Added `competition\_open\_date\_known` flag for stores with unknown competition opening date
 
-\- Investigated and documented: 54 zero-sales-while-open rows (consistent with zero customers), 180-store 184-day gap pattern (likely planned closures)
+- Investigated and documented: 54 zero-sales-while-open rows (consistent with zero customers), 180-store 184-day gap pattern (likely planned closures)
 
-\- Saved cleaned, merged datasets to `data/processed/`
+- Saved cleaned, merged datasets to `data/processed/`
 
 
 
-\*\*Outputs:\*\*
+*Outputs:*
 
-\- `data/processed/train\_cleaned.csv` (1,017,209 rows)
+- `data/processed/train\_cleaned.csv` (1,017,209 rows)
 
-\- `data/processed/test\_cleaned.csv` (41,088 rows)
+- `data/processed/test\_cleaned.csv` (41,088 rows)
 
-\- `notebooks/01\_data\_cleaning\_eda.ipynb`
+- `notebooks/01\_data\_cleaning\_eda.ipynb`
 
-\- `docs/decision\_log.md` (decision-by-decision trail)
+- `docs/decision\_log.md` (decision-by-decision trail)
 
 
 
-\*\*Stage 1 completion criteria met:\*\*
+*Stage 1 completion criteria met:*
 
-\- One clean merged dataset
+- One clean merged dataset
 
-\- Zero unexplained nulls
+- Zero unexplained nulls
 
-\- Written log of every cleaning decision and why
+- Written log of every cleaning decision and why
 
 
 
-\---
+---
 
 
 
-\### Stage 2 — Exploratory Data Analysis (EDA) 🚧 \*\*IN PROGRESS\*\*
+### Stage 2 — Exploratory Data Analysis (EDA) 🚧 \*\*IN PROGRESS\*\*
 
 
+*Goal:* Understand the business before you model it.
 
-\*\*Goal:\*\* Understand the business before you model it.
 
 
+*Planned work:*
 
-\*\*Planned work:\*\*
+- Sales trends by day-of-week, month, holiday, StoreType, Assortment
 
-\- Sales trends by day-of-week, month, holiday, StoreType, Assortment
+- Promo vs. non-promo sales comparison (does Promo2 actually work? for which store types?)
 
-\- Promo vs. non-promo sales comparison (does Promo2 actually work? for which store types?)
+- Competition distance vs. sales correlation
 
-\- Competition distance vs. sales correlation
+- Anomaly identification: store closures, extreme outliers, unusual patterns
 
-\- Anomaly identification: store closures, extreme outliers, unusual patterns
 
 
+*Done when:* 8–10 genuine, defensible insights, each backed by a chart and a one-line business interpretation.
 
-\*\*Done when:\*\* 8–10 genuine, defensible insights, each backed by a chart and a one-line business interpretation.
 
 
+---
 
-\---
 
 
+### Stage 3 — Baseline Machine Learning
 
-\### Stage 3 — Baseline Machine Learning
 
 
+*Goal:* Prove a simple model works before reaching for something complex.
 
-\*\*Goal:\*\* Prove a simple model works before reaching for something complex.
 
 
+*Planned work:*
 
-\*\*Planned work:\*\*
+- Feature engineering: lag features, rolling averages, date encodings, promo flags, competition-distance buckets
 
-\- Feature engineering: lag features, rolling averages, date encodings, promo flags, competition-distance buckets
+- Baseline models: linear regression → random forest → XGBoost
 
-\- Baseline models: linear regression → random forest → XGBoost
+- Naive baseline: "predict tomorrow = same as last week"
 
-\- Naive baseline: "predict tomorrow = same as last week"
 
 
+*Done when:* Working baseline model, MAE/RMSE reported, clear margin over naive baseline.
 
-\*\*Done when:\*\* Working baseline model, MAE/RMSE reported, clear margin over naive baseline.
 
 
+---
 
-\---
 
 
+### Stage 4 — Advanced Forecasting Model
 
-\### Stage 4 — Advanced Forecasting Model
 
 
+*Goal:* Build the model that's actually good enough to ship.
 
-\*\*Goal:\*\* Build the model that's actually good enough to ship.
 
 
+*Planned work:*
 
-\*\*Planned work:\*\*
+- Time-series methods: Prophet (seasonality/holidays native) or LSTM (if demonstrating deep learning)
 
-\- Time-series methods: Prophet (seasonality/holidays native) or LSTM (if demonstrating deep learning)
+- Per-store or per-store-cluster modeling (tradeoff explained)
 
-\- Per-store or per-store-cluster modeling (tradeoff explained)
+- Rolling-window cross-validation (multiple windows, not a single split)
 
-\- Rolling-window cross-validation (multiple windows, not a single split)
 
+*Done when:* Stable error across ≥3 validation windows, predicted-vs-actual chart tracking well.
 
 
-\*\*Done when:\*\* Stable error across ≥3 validation windows, predicted-vs-actual chart tracking well.
 
+---
 
 
-\---
 
+### Stage 5 — Model Evaluation \& Explainability
 
 
-\### Stage 5 — Model Evaluation \& Explainability
 
+*Goal:* Prove you understand your model, not just that it runs.
 
 
-\*\*Goal:\*\* Prove you understand your model, not just that it runs.
 
+*Planned work:*
 
+- SHAP values: global + local feature importance
 
-\*\*Planned work:\*\*
+- Error analysis: which stores/periods does the model get wrong, and why
 
-\- SHAP values: global + local feature importance
+- Honest evaluation report: where to trust the model, where not
 
-\- Error analysis: which stores/periods does the model get wrong, and why
 
-\- Honest evaluation report: where to trust the model, where not
 
+*Done when:* Written evaluation doc with SHAP visuals and an explicit "here's where this model breaks" section.
 
 
-\*\*Done when:\*\* Written evaluation doc with SHAP visuals and an explicit "here's where this model breaks" section.
 
+---
 
 
-\---
 
+### Stage 6 — GenAI Layer
 
 
-\### Stage 6 — GenAI Layer
 
+*Goal:* Turn model output into something a human actually wants to read.
 
 
-\*\*Goal:\*\* Turn model output into something a human actually wants to read.
 
+*Planned work:*
 
+- Local LLM (via Ollama) takes forecast + SHAP + context, generates plain-English weekly brief
 
-\*\*Planned work:\*\*
+- Strict grounding: LLM only narrates numbers fed to it, never invents figures
 
-\- Local LLM (via Ollama) takes forecast + SHAP + context, generates plain-English weekly brief
+- Explicit hallucination test: 10 forecasts, verify every number/claim matches source data
 
-\- Strict grounding: LLM only narrates numbers fed to it, never invents figures
 
-\- Explicit hallucination test: 10 forecasts, verify every number/claim matches source data
 
+*Done when:* 10/10 test briefs fully grounded and factually consistent.
 
 
-\*\*Done when:\*\* 10/10 test briefs fully grounded and factually consistent.
 
+---
 
 
-\---
 
+### Stage 7 — Product / Software
 
 
-\### Stage 7 — Product / Software
 
+*Goal:* Make it something a stranger can actually use.
 
 
-\*\*Goal:\*\* Make it something a stranger can actually use.
 
+*Planned work:*
 
+- Web dashboard (Streamlit or FastAPI + React): searchable store selector, forecast chart, SHAP breakdown, AI brief, PDF export
 
-\*\*Planned work:\*\*
+- Curated "featured stores" default set
 
-\- Web dashboard (Streamlit or FastAPI + React): searchable store selector, forecast chart, SHAP breakdown, AI brief, PDF export
+- Clean README, live demo link if deployed
 
-\- Curated "featured stores" default set
 
-\- Clean README, live demo link if deployed
 
+*Done when:* Someone with zero context can open the link, pick a store, and understand what's forecasted and why — without explanation.
 
 
-\*\*Done when:\*\* Someone with zero context can open the link, pick a store, and understand what's forecasted and why — without explanation.
 
+---
 
 
-\---
 
+## How to Reproduce Stage 1
 
 
-\## How to Reproduce Stage 1
+1. Download `train.csv`, `test.csv`, `store.csv` from the Kaggle competition page into `data/raw/`
 
+2. Run `notebooks/01\_data\_cleaning\_eda.ipynb` from top to bottom
 
-
-1\. Download `train.csv`, `test.csv`, `store.csv` from the Kaggle competition page into `data/raw/`
-
-2\. Run `notebooks/01\_data\_cleaning\_eda.ipynb` from top to bottom
-
-3\. Cleaned outputs will be saved to `data/processed/`
+3. Cleaned outputs will be saved to `data/processed/`
 
 
 
@@ -316,21 +313,21 @@ Raw data files are not committed — the notebook is the reproducible pipeline.
 
 
 
-\## Decision Log
+## Decision Log
 
 
 
 All meaningful cleaning/EDA decisions are recorded in `docs/decision\_log.md`, including:
 
-\- What was changed
+- What was changed
 
-\- Options considered
+- Options considered
 
-\- Reasoning and chosen approach
+- Reasoning and chosen approach
 
-\- Downstream impact (if any)
+- Downstream impact (if any)
 
-\- Explicit labeling of assumptions vs. facts
+- Explicit labeling of assumptions vs. facts
 
 
 
@@ -338,15 +335,15 @@ This is intended to be LinkedIn/GitHub writeup-ready — not just internal notes
 
 
 
-\## Tech Stack
+## Tech Stack
 
 
 
-\- Python, pandas, numpy
+- Python, pandas, numpy
 
-\- Jupyter/Colab for notebooks
+- Jupyter/Colab for notebooks
 
-\- Git + GitHub for version control
+- Git + GitHub for version control
 
 
 
@@ -354,7 +351,7 @@ Later stages will add: scikit-learn, XGBoost/LightGBM, Prophet/LSTM, SHAP, Ollam
 
 
 
-\## License
+## License
 
 
 
@@ -362,13 +359,8 @@ This is a portfolio/learning project. Rossmann dataset is provided under Kaggle'
 
 
 
-\---
+---
 
 
 
-\*\*Built in public by Aliraza\*\*  
-
-```
-
-
-
+*Built in public by Aliraza*
