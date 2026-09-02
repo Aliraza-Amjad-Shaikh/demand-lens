@@ -1,0 +1,32 @@
+# Data files (raw and processed CSVs are too large and regenerable)
+data/raw/*.csv
+data/processed/*.csv
+
+# Jupyter checkpoint files
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments (if you create one later)
+venv/
+env/
+.env
+
+# IDE / editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
