@@ -62,3 +62,15 @@ Validation performed: (1) merged row count equals train.csv row count (1,017,209
 
 Downstream impact: merged dataset now carries store-level context on every transactional row; the 3 stores with unknown CompetitionDistance remain explicitly unknown (not imputed), consistent with the earlier Stage 1 decision to defer that choice to modeling stages.
 
+
+
+\## EDA evidence — CompetitionDistance missingness
+
+
+
+Stores 291, 622, and 879 have unknown CompetitionDistance. Their profiles are heterogeneous: stores 291 and 879 share StoreType d / Assortment a but have materially different average sales, while store 622 is StoreType a / Assortment c and has below-segment-average sales.
+
+
+
+Implication for Stage 3/4: If the selected model requires a numeric CompetitionDistance, evaluate segment-level median imputation (StoreType × Assortment) together with an explicit CompetitionDistance-missing indicator. Do not treat the imputed value as observed ground truth.
+
