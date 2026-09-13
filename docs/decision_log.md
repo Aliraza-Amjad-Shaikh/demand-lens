@@ -74,3 +74,9 @@ Stores 291, 622, and 879 have unknown CompetitionDistance. Their profiles are he
 
 Implication for Stage 3/4: If the selected model requires a numeric CompetitionDistance, evaluate segment-level median imputation (StoreType × Assortment) together with an explicit CompetitionDistance-missing indicator. Do not treat the imputed value as observed ground truth.
 
+
+
+\## Correction: Dataset date range
+
+train\_cleaned.csv covers 2014-07-21 to 2015-07-31 only (about 13 months), not Jan 2013-Jul 2015 as initially assumed. All seasonality and year-over-year findings in Stage 2 are based on this single \~13-month window. No third year exists to confirm any pattern (e.g., December peak) as a recurring annual cycle.
+
