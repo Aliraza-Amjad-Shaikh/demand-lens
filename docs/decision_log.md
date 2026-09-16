@@ -74,3 +74,9 @@ Stores 291, 622, and 879 have unknown CompetitionDistance. Their profiles are he
 
 Implication for Stage 3/4: If the selected model requires a numeric CompetitionDistance, evaluate segment-level median imputation (StoreType × Assortment) together with an explicit CompetitionDistance-missing indicator. Do not treat the imputed value as observed ground truth.
 
+
+
+\## Correction: Closure-gap pattern does not match Stage 1 note
+
+The Stage 1 note describing "180 stores, 184-day contiguous closure gap" is not supported by this dataset. Verified: only 2 stores (103, 1081) show a long contiguous closure, both spanning exactly 2013-01-01 to 2013-07-04 (185 days, not 184), left-censored at the dataset's start (no pre-closure data exists). Treat the original 180-store figure as unverified for this dataset version. See eda\_findings.md for full characterization.
+
