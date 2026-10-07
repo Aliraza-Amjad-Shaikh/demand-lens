@@ -184,3 +184,23 @@ Labeled as assumption, not fact: The filled values are approximations; the flag 
 
 Downstream impact: Tree models can use the flag to separate filled values from observed ones. Resolves the Stage 1/2 deferral.
 
+
+
+Decision: Use a single log1p-transformed CompetitionDistance column for all models.
+
+
+
+Options considered: (A) one log column for all models, (B) raw and log both, (C) model-specific pipelines.
+
+
+
+Reasoning: log1p is neutral for trees and necessary for linear regression. One column keeps a single shared feature table and avoids duplicated, correlated features.
+
+
+
+Chosen approach: Option A. Raw column excluded from the model feature list.
+
+
+
+Downstream impact: Linear coefficients are on the log scale.
+
