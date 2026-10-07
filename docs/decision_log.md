@@ -160,3 +160,27 @@ Implication for Stage 3/4: If the selected model requires a numeric CompetitionD
 
 The Stage 1 note describing "180 stores, 184-day contiguous closure gap" is not supported by this dataset. Verified: only 2 stores (103, 1081) show a long contiguous closure, both spanning exactly 2013-01-01 to 2013-07-04 (185 days, not 184), left-censored at the dataset's start (no pre-closure data exists). Treat the original 180-store figure as unverified for this dataset version. See eda\_findings.md for full characterization.
 
+
+
+Decision: Impute CompetitionDistance for stores 291, 622, 879 with StoreType×Assortment median plus a missing flag.
+
+
+
+Options considered: (A) global median, (B) segment median + flag, (C) large placeholder, (D) leave NaN, (E) drop stores, (F) model-based fill.
+
+
+
+Reasoning: Segment peers are large (d/a n=126, a/c n=220). Distance varies by format. The test set contains these stores, so dropping them is not possible. A placeholder misrepresents "unknown" as "no competitor".
+
+
+
+Chosen approach: Option B, applied identically to train and test.
+
+
+
+Labeled as assumption, not fact: The filled values are approximations; the flag marks them as such.
+
+
+
+Downstream impact: Tree models can use the flag to separate filled values from observed ones. Resolves the Stage 1/2 deferral.
+
