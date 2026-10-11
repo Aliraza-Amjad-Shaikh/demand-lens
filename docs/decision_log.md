@@ -224,3 +224,27 @@ Chosen approach: Option A. Month is stored as 1–12; linear pipeline applies on
 
 Downstream impact: Verify in 3B.4 that each model's predicted monthly means reproduce the December peak and January low. Add IsDecember only if validation shows the models miss it.
 
+
+
+Decision: Promo × StoreType interaction built only in the linear pipeline.
+
+
+
+Options considered: (A) Promo only, (B) interaction columns in the saved table, (C) interaction in the linear pipeline only, (D) separate model per StoreType.
+
+
+
+Reasoning: Trees learn the interaction through splits. Linear needs explicit terms. One raw table keeps comparisons fair. Type b has 17 stores, too few for its own model.
+
+
+
+Chosen approach: Option C.
+
+
+
+Labeled as assumption, not fact: Promo is known in advance at prediction time.
+
+
+
+Downstream impact: Implement in 3B.3. Set tree depth high enough to learn the interaction.
+
