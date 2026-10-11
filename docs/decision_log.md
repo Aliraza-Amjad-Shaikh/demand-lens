@@ -204,3 +204,23 @@ Chosen approach: Option A. Raw column excluded from the model feature list.
 
 Downstream impact: Linear coefficients are on the log scale.
 
+
+
+Decision: No separate December flag; Month only.
+
+
+
+Options considered: (A) Month only, (B) Month + IsDecember, (C) Month + Nov–Dec flag, (D) cyclical sin/cos.
+
+
+
+Reasoning: Trees isolate month 12 with one split. The linear pipeline one-hot encodes Month, giving December its own coefficient. A Nov–Dec flag is not supported by EDA (November 2014 is confounded with a promo spike). Cyclical encoding would blur December and January, which are opposite extremes. The test set (Aug–Sep 2015) does not contain December.
+
+
+
+Chosen approach: Option A. Month is stored as 1–12; linear pipeline applies one-hot.
+
+
+
+Downstream impact: Verify in 3B.4 that each model's predicted monthly means reproduce the December peak and January low. Add IsDecember only if validation shows the models miss it.
+
