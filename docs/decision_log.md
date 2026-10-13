@@ -308,3 +308,27 @@ Reasoning: Lags give the same-weekday pattern; the rolling mean gives the store'
 
 Chosen approach: Option 2. More features only if validation shows a measurable gain.
 
+
+
+Decision: Lag/rolling features = lag\_49, lag\_56, roll\_mean\_28 (28-day, shifted 48 days), on a fixed 48-day horizon, open days only.
+
+
+
+Options considered: (1) lag\_49 only, (2) small set, (3) large set; (A) include closed days, (B) open days only; (A) drop cold start, (B) keep NaN, (C) fill with early mean; (A) fill blanks with rolling mean, (B) fill with 0, (C) leave NaN, (D) fill with previous same-weekday value.
+
+
+
+Reasoning: Fixed 48-day horizon matches the test. Open-days-only respects the EDA's availability-vs-demand separation. Dropping cold start keeps the model comparison fair. The same-weekday fill (D) failed due to index alignment after four attempts; rolling-mean fill is the pragmatic fallback.
+
+
+
+Chosen approach: Small set, open days only, drop cold start, rolling-mean fill with flags, store-mean fallback for 87 residual rows.
+
+
+
+Labeled as assumption, not fact: ISO week approximates Rossmann's week numbering. The 180-store gap's cause is unknown.
+
+
+
+Downstream impact: 99,820 rows dropped. 17% of remaining rows have filled lags, flagged. Correction notes added to decision\_log.md and eda\_findings.md.
+
