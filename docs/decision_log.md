@@ -332,3 +332,7 @@ Labeled as assumption, not fact: ISO week approximates Rossmann's week numbering
 
 Downstream impact: 99,820 rows dropped. 17% of remaining rows have filled lags, flagged. Correction notes added to decision\_log.md and eda\_findings.md.
 
+
+
+Correction: The Stage 2 claim that "the 180-store, 184-day gap does not exist" is wrong for missing rows. Verified: 180 stores are missing 184 days of rows (2014-07-01 to 2014-12-31), plus one store missing one day. Stage 2 only searched Open==0 rows and could not detect absent rows. The original Stage 1 note was correct about absent rows. Stores 103 and 1081 remain a separate, real finding (Open==0 rows, 2013-01-01 to 2013-07-04).
+
