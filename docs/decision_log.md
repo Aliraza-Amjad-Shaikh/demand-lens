@@ -272,3 +272,23 @@ Labeled as assumption, not fact: ISO week approximates Rossmann's week numbering
 
 Downstream impact: Both features are 0 for non-Promo2 stores. In test, enrolled equals Promo2.
 
+
+
+Decision: Fixed 48-day forecast horizon. All lag and rolling features use sales at least 48 days old.
+
+
+
+Options considered: (A) fixed 48-day horizon, (B) recursive, (C) next-day lags, (D) hybrid by horizon bucket.
+
+
+
+Reasoning: Test spans 48 days (2015-08-01 to 2015-09-17) with no Sales, so short lags do not exist for most of it. Next-day lags would give an optimistic validation score that does not carry to the real task. Recursive forecasting compounds errors and adds complexity.
+
+
+
+Chosen approach: Option A. Lags are multiples of 7 and at least 49 days so weekday stays aligned.
+
+
+
+Downstream impact: Naive baseline in 3B.1 must be horizon-aware (cannot use last week). Validation windows are 48 days long to match.
+
