@@ -248,3 +248,27 @@ Labeled as assumption, not fact: Promo is known in advance at prediction time.
 
 Downstream impact: Implement in 3B.3. Set tree depth high enough to learn the interaction.
 
+
+
+Decision: Define Promo2 features as Promo2\_enrolled and Promo2\_round\_start\_month.
+
+
+
+Options considered: (A) enrolled flag, (B) round-start-month flag, (C) months-since-round-start, (D) raw columns only.
+
+
+
+Reasoning: Documentation gives round start months but not round length, so a true "active now" flag would rely on an unverifiable assumption. A and B need no duration assumption. Raw nulls break linear and random forest. A date-aware flag avoids marking pre-start days as Promo2.
+
+
+
+Chosen approach: A and B; C held as a Part B experiment.
+
+
+
+Labeled as assumption, not fact: ISO week approximates Rossmann's week numbering.
+
+
+
+Downstream impact: Both features are 0 for non-Promo2 stores. In test, enrolled equals Promo2.
+
