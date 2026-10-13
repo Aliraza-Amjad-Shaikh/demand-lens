@@ -292,3 +292,19 @@ Chosen approach: Option A. Lags are multiples of 7 and at least 49 days so weekd
 
 Downstream impact: Naive baseline in 3B.1 must be horizon-aware (cannot use last week). Validation windows are 48 days long to match.
 
+
+
+Decision: Lag/rolling feature set = lag\_49, lag\_56, and a 28-day rolling mean shifted by 48 days.
+
+
+
+Options considered: (1) lag\_49 only, (2) small set, (3) large set of lags and windows.
+
+
+
+Reasoning: Lags give the same-weekday pattern; the rolling mean gives the store's recent level. EDA does not call for more, and a large set adds correlated columns and cold-start loss with only \~2.5 years of data.
+
+
+
+Chosen approach: Option 2. More features only if validation shows a measurable gain.
+
