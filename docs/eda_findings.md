@@ -153,3 +153,5 @@ All sales-demand comparisons use `open_days` (`Open == 1`) unless the question s
 ## Dataset-scope note
 
 During Phase 2, a transient error caused the monthly-seasonality analysis to run against a truncated view of the data (Jul 2014–Jul 2015 instead of the full Jan 2013–Jul 2015 range). This was caught, the underlying dataframe was re-verified (full row count 1,017,209, correct date range confirmed), and the monthly-seasonality and promo-overlap findings above were recomputed on the corrected data. Earlier intermediate figures based on the truncated window are superseded by the findings in this document.
+
+Correction: The "Closure-gap characterization" section's conclusion that the 180-store pattern "does not match this dataset" is wrong for missing rows. 180 stores have 184 days of rows absent (2014-07-01 to 2014-12-31), confirmed by row-count arithmetic (180×184+1 = 33,121 missing). This was invisible to the Open==0-based analysis. The 103/1081 finding stands separately.
