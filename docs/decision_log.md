@@ -380,3 +380,23 @@ Chosen approach: Exclusion confirmed. Year to be tested as a Part B experiment. 
 
 Downstream impact: Store identity enters only through lag features and Segment, not a raw Store ID. Feature validation (3A.7) will check these 18 features for leakage, nulls and ranges.
 
+
+
+Decision: Confirm lag/roll-mean definitions from source code; fill roll\_mean\_28 nulls with lag\_49; no lag rebuild needed.
+
+
+
+Options considered: (A) recompute lags under a new definition, (B) keep existing definitions and document, (C) leave roll\_mean nulls unfilled.
+
+
+
+Reasoning: Source code shows lags are a calendar shift over an open-days-only series (closed days = NaN), consistent across train and test. Recomputing (A) would change the feature definition without a documented problem to fix. Leaving roll\_mean nulls (C) breaks the linear pipeline on 7-8% of rows.
+
+
+
+Chosen approach: Option B for lags (documented, no rebuild), fill for roll\_mean\_28.
+
+
+
+Downstream impact: Feature semantics are now precisely documented: lag\_49 = open-day sales 49 calendar days back (filled if closed), roll\_mean\_28 = mean open-day sales over days 48-75 back. No leakage into the 48-day horizon. Part A feature engineering is complete.
+
