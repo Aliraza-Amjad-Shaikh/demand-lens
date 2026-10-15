@@ -336,3 +336,27 @@ Downstream impact: 99,820 rows dropped. 17% of remaining rows have filled lags, 
 
 Correction: The Stage 2 claim that "the 180-store, 184-day gap does not exist" is wrong for missing rows. Verified: 180 stores are missing 184 days of rows (2014-07-01 to 2014-12-31), plus one store missing one day. Stage 2 only searched Open==0 rows and could not detect absent rows. The original Stage 1 note was correct about absent rows. Stores 103 and 1081 remain a separate, real finding (Open==0 rows, 2013-01-01 to 2013-07-04).
 
+
+
+Decision: Encode StoreType and Assortment as one combined Segment column (9 levels).
+
+
+
+Options considered: (A) separate one-hot columns, (B) combined Segment column, (C) combined with sparse levels merged, (D) separate columns for trees and combined for linear.
+
+
+
+Reasoning: Assortment b exists only within StoreType b (confirmed, 0 rows elsewhere), so separate columns would split one segment's effect across overlapping columns. A combined column mirrors the real structure and serves every model from one shared table. Merging the one-store b\_c level would be arbitrary, with no EDA support for the target level.
+
+
+
+Chosen approach: Option B. Segment\_code from training segments for trees; one-hot inside the linear pipeline. StoreType kept for the Promo interaction only.
+
+
+
+Labeled as assumption, not fact: b-segment coefficients describe 17 stores only; b\_c is a single store.
+
+
+
+Downstream impact: Plain StoreType and Assortment stay out of the model feature list. Linear pipeline applies one-hot on Segment and builds the Promo × StoreType terms.
+
