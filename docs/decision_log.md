@@ -360,3 +360,23 @@ Labeled as assumption, not fact: b-segment coefficients describe 17 stores only;
 
 Downstream impact: Plain StoreType and Assortment stay out of the model feature list. Linear pipeline applies one-hot on Segment and builds the Promo × StoreType terms.
 
+
+
+Decision: Exclude Customers and Sales/Customer from all models; define the final 18-feature list. Hold Year and Open as pending.
+
+
+
+Options considered: Not applicable for the exclusion, since Customers is not known at prediction time and does not exist in the test file. For Year and Open: include now vs. test in Part B.
+
+
+
+Reasoning: A forecast cannot use a value that is only recorded after the day happens. Year is risky because 2015 is partial and test covers a period with no 2015 training data. Open depends on the open-days-only training decision, which comes before modeling.
+
+
+
+Chosen approach: Exclusion confirmed. Year to be tested as a Part B experiment. Open to be decided with the training-rows decision.
+
+
+
+Downstream impact: Store identity enters only through lag features and Segment, not a raw Store ID. Feature validation (3A.7) will check these 18 features for leakage, nulls and ranges.
+
