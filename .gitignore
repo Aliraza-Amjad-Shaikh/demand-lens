@@ -1,6 +1,7 @@
 # Data files (raw and processed CSVs are too large and regenerable)
 data/raw/*.csv
 data/processed/*.csv
+data/output/*.csv
 
 # Jupyter checkpoint files
 .ipynb_checkpoints/
