@@ -127,7 +127,7 @@ Planned but not done: a horizon-valid naive baseline ("same day last week" is im
 *Original done criterion (not met):* Working baseline model, MAE/RMSE reported, clear margin over naive baseline.
 
 ---
-
+*Stages 4–7 are not started.*
 ### Stage 4 — Advanced Forecasting Model
 
 *Goal:* Build the model that's actually good enough to ship.
@@ -184,12 +184,13 @@ Planned but not done: a horizon-valid naive baseline ("same day last week" is im
 
 ---
 
-## How to Reproduce Stage 1 & 2
+## How to Reproduce Stages 1–3A
 
 1. Download `train.csv`, `test.csv`, `store.csv` from the Kaggle competition page into `data/raw/`
 2. Run `notebooks/01_data_cleaning_eda.ipynb` from top to bottom to produce the cleaned, merged datasets
 3. Run `notebooks/02_eda.ipynb` from top to bottom to reproduce the Stage 2 findings
-4. Cleaned outputs will be saved to `data/processed/`
+4. Run `notebooks/03_<your feature-engineering notebook name>.ipynb` to produce the 18-feature tables
+5. Cleaned and feature outputs are saved to `data/processed/`
 
 Raw data files are not committed — the notebooks are the reproducible pipeline.
 
@@ -203,6 +204,7 @@ All meaningful cleaning/EDA decisions are recorded in `docs/decision_log.md`, in
 - Downstream impact (if any)
 - Explicit labeling of assumptions vs. facts
 - Corrections, where later evidence overturned an earlier note (see the Stage 2 closure-gap correction)
+The decision log now also covers Stage 3A feature decisions (horizon, lags, segment encoding, Promo2 features, feature exclusions) and the decision to pause the project.
 
 Stage 2's full set of findings — question, method, result, business interpretation, and caveats for every investigation — is recorded separately in `docs/eda_findings.md`, written to be usable as direct input to Stage 3/4 feature decisions, not just as internal notes.
 
