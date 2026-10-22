@@ -29,15 +29,17 @@ Competition page: https://www.kaggle.com/c/rossmann-store-sales
 ## Project Structure
 
 ```
-demandlens/
+demand-lens/
 ├── data/
 │   ├── raw/              # Original Kaggle files (gitignored)
-│   └── processed/        # Cleaned, merged datasets (gitignored)
+│   └── processed/        # Cleaned, merged and feature-engineered datasets (gitignored)
 ├── notebooks/
 │   ├── 01_data_cleaning_eda.ipynb
-│   └── 02_eda.ipynb
+│   ├── 02_eda.ipynb
+│   ├── 03_<your feature-engineering notebook name>.ipynb
+│   └── 04_basic_modelling.ipynb   # setup and checks only; no models trained
 ├── docs/
-│   ├── decision_log.md   # Running record of every cleaning/EDA decision
+│   ├── decision_log.md   # Running record of every cleaning/EDA/feature decision
 │   └── eda_findings.md   # Stage 2 findings: question, method, result, interpretation
 ├── .gitignore
 └── README.md
