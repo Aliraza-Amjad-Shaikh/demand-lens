@@ -99,24 +99,32 @@ This project is being built in 7 deliberate stages. Each stage has a clear "done
 - **StoreType and Assortment profiles** — StoreType b drives sales through customer volume (highest traffic, lowest sales-per-customer); StoreType d drives sales through higher spend-per-visit (lowest traffic, highest sales-per-customer). Assortment b exists almost exclusively within StoreType b — the two variables are not independent for that segment.
 - **Closure-gap characterization, with a correction to Stage 1** — The originally documented "180 stores, 184-day gap" does not hold up under direct investigation. Only 2 stores (103, 1081) show a long contiguous closure, both left-censored at the dataset's very start (2013-01-01 to 2013-07-04, 185 days) — consistent with these stores not yet being open/reporting when data collection began, not a mid-life renovation event. This has been logged in `docs/decision_log.md` as an explicit correction, since it directly affects how Stage 3/4 lag/rolling features must be built (per-store effective start date, not a shared closure-window adjustment).
 
-*Remaining work:* Final consolidated review of all findings for internal consistency, and confirming the notebook (`02_eda.ipynb`) runs cleanly top-to-bottom with all findings narrated.
-
-*Done when:* Every finding has a stated question, method, result, and business interpretation; small-sample and confounded results are explicitly flagged rather than generalized; and both deferred Stage 1 items (CompetitionDistance nulls, closure-gap pattern) are fully characterized with evidence — without being resolved — ready to inform Stage 3/4.
+*Outcome:* Every finding has a stated question, method, result and caveat. Small-sample segments (StoreType b, 17 stores) are flagged as weak evidence. The two items deferred from Stage 1 were characterized and then resolved in Stage 3A (see below).
 
 ---
 
-### Stage 3 — Baseline Machine Learning
+### Stage 3 — Baseline Machine Learning ⏸ **PARTIAL (Part A complete, Part B not started)**
 
 *Goal:* Prove a simple model works before reaching for something complex.
 
-*Planned work:*
+**Part A — Feature engineering ✅ COMPLETE**
 
-- Feature engineering: lag features, rolling averages, date encodings, promo flags, competition-distance buckets
-- Resolve the two items deferred from Stage 1/2: choose a `CompetitionDistance` imputation strategy for stores 291/622/879 (segment-level median plus an explicit missingness indicator is the leading candidate per EDA evidence), and set each store's lag/rolling feature computation to its own effective start date given the closure-gap correction
-- Baseline models: linear regression → random forest → XGBoost
-- Naive baseline: "predict tomorrow = same as last week"
+- Fixed 48-day forecast horizon (test = 2015-08-01 to 2015-09-17). All lag and rolling features use sales at least 48 days old: `lag_49`, `lag_56` and a 28-day rolling mean shifted by 48 days. Lags are built on an open-days-only series (closed days = NaN), and no leakage was found in validation.
+- `CompetitionDistance` nulls for stores 291, 622 and 879 imputed with the StoreType × Assortment median plus a missing flag; a single log1p column is used for all models.
+- `StoreType` and `Assortment` combined into one 9-level `Segment` (Assortment b exists only inside StoreType b).
+- Promo2 features defined as `Promo2_enrolled` and `Promo2_round_start_month`.
+- Final list of 18 model features, with `Customers` and `Sales/Customer` excluded because they are not known at prediction time. `Year` and `Open` were held as pending decisions for Part B.
 
-*Done when:* Working baseline model, MAE/RMSE reported, clear margin over naive baseline.
+**Part B — Baseline modeling ❌ NOT STARTED**
+
+Planned but not done: a horizon-valid naive baseline ("same day last week" is impossible at a 48-day horizon), time-respecting 48-day validation folds, linear regression, random forest and gradient-boosted baselines, and the `Year` and `Open` decisions. A setup notebook (`04_basic_modelling.ipynb`) was created but no models were trained.
+
+*Known gaps (unverified assumptions, not facts):*
+- The cause of the 64,087 `roll_mean_28` nulls (cold start plus the 2014 store gap) is inferred, not directly verified.
+- The explanation for an earlier ~29.5k lag mismatch (NaN vs 0 handling) was never proven.
+- The origin of the fill value 4759.096 was never traced.
+
+*Original done criterion (not met):* Working baseline model, MAE/RMSE reported, clear margin over naive baseline.
 
 ---
 
