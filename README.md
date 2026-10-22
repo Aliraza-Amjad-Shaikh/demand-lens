@@ -4,6 +4,8 @@ DemandLens is an end-to-end retail demand forecasting system built on the Rossma
 
 This is being built fully in public, stage by stage, with every decision documented. The repo will grow from a cleaned dataset (Stage 1) through a full exploratory analysis (Stage 2) into a forecasting pipeline with an AI narrative layer and a shipped dashboard product (Stage 7).
 
+**Current status:** Paused after Stage 3, Part A. Stages 1, 2 and 3A are complete and documented; baseline modeling (3B) and everything after it is not started. See [Project Status](#project-status-paused) at the bottom.
+
 ## Why This Project Exists
 
 Most forecasting projects stop at a notebook with an R² score and a shrug. DemandLens is designed to be closer to what a real retail data team would ship:
