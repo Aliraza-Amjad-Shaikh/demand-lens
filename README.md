@@ -81,11 +81,11 @@ This project is being built in 7 deliberate stages. Each stage has a clear "done
 
 ---
 
-### Stage 2 — Exploratory Data Analysis (EDA) 🚧 **IN PROGRESS**
+### Stage 2 — Exploratory Data Analysis (EDA) ✅  **COMPLETE**
 
 *Goal:* Understand the business before you model it — every chart is tied to a real question, a method, a defensible result, and a business interpretation, not produced for its own sake.
 
-*Approach:* Hypothesis-driven, not chart-dumping. Stage 1 decisions were treated as locked ground truth going in; where EDA has found genuine evidence contradicting a Stage 1 note, that's been flagged explicitly and corrected in `decision_log.md` rather than silently overwritten (see the closure-gap correction below). No imputation of the deferred `CompetitionDistance` nulls and no outlier removal happens in this stage — EDA gathers evidence for those decisions, which are made in Stage 3/4 once a model family is chosen.
+*Approach:* Hypothesis-driven, not chart-dumping. Stage 1 decisions were treated as locked ground truth going in; where EDA has found genuine evidence contradicting a Stage 1 note, that's been flagged explicitly and corrected in `decision_log.md` rather than silently overwritten (see the closure-gap correction below). No imputation of the deferred `CompetitionDistance` nulls and no outlier removal happens in this stage — EDA gathers evidence for those decisions, which are made in Stage 3/4 once a model family is chosen.- **Closure-gap characterization, with two corrections** — Two stores (103, 1081) have a long contiguous `Open == 0` run from 2013-01-01 to 2013-07-04 (185 days), left-censored at the start of the data, most plausibly stores not yet trading or reporting. A separate pattern was first missed because the check only looked at `Open == 0` rows: 180 stores have no rows at all for 184 days (2014-07-01 to 2014-12-31), confirmed by row arithmetic (180 × 184 + 1 = 33,121 missing rows). The original Stage 1 note on the 180-store gap was therefore correct for absent rows, and the Stage 2 "does not exist" claim was wrong. Both corrections are logged in `docs/decision_log.md`. Causes of both patterns are inferred, not confirmed.
 
 *Findings completed so far* (full detail in `docs/eda_findings.md`):
 
