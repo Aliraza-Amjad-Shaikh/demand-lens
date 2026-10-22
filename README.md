@@ -226,4 +226,18 @@ This is a portfolio/learning project. Rossmann dataset is provided under Kaggle'
 
 ---
 
+## Project Status: Paused
+
+**Paused after Stage 3, Part A.** Stages 1, 2 and 3A are complete and documented. Part B (baseline modeling) and Stages 4–7 were not built.
+
+**Why:** Several feature-lineage questions were still open when baseline modeling was about to begin, and baseline numbers would depend on those features. The cause of the `roll_mean_28` nulls, the explanation for a ~29.5k lag mismatch, and the origin of one fill value (4759.096) were all unverified. The training population (open days only vs all days) was also undecided. Rather than report model results on features with undocumented lineage, I paused the project and recorded these items as open assumptions. See `docs/decision_log.md`.
+
+**What this repo demonstrates:** Documented data cleaning, hypothesis-driven EDA with explicit corrections when earlier notes proved wrong, and leakage-aware feature engineering for a fixed 48-day horizon.
+
+**If resumed:**
+1. Trace the three open items above.
+2. Decide the training population and settle the `Open` feature.
+3. Build a horizon-valid naive baseline and 3 or more time-respecting 48-day folds.
+4. Train linear, random forest and gradient-boosted baselines on identical folds, then run the `Year` experiment.
+
 *Built in public by Aliraza*
